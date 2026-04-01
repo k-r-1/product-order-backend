@@ -1,0 +1,41 @@
+package com.sparta.order_system.service;
+
+import com.sparta.order_system.dto.OrderRequestDto;
+import com.sparta.order_system.dto.OrderResponseDto;
+import com.sparta.order_system.entity.Order;
+import com.sparta.order_system.entity.Product;
+import com.sparta.order_system.repository.OrderRepository;
+import com.sparta.order_system.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+public class OrderService {
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
+
+    @Transactional
+    public OrderResponseDto createOrder(OrderRequestDto requestDto) {
+        Long productId = requestDto.getProductId();
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다. ID: " + productId));
+
+        Order order = Order.builder()
+                .product(product)
+                .build();
+
+        Order saveOrder = orderRepository.save(order);
+
+        return new OrderResponseDto(saveOrder);
+    }
+
+    @Transactional(readOnly = true)
+    public OrderResponseDto getOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다. ID: " + orderId));
+
+        return new OrderResponseDto(order);
+    }
+}
