@@ -19,15 +19,19 @@ public class OrderService {
     @Transactional
     public OrderResponseDto createOrder(OrderRequestDto requestDto) {
         Long productId = requestDto.getProductId();
-        Product product = productRepository.findById(productId)
+        Product product = productRepository.findByIdWithPessimisticLock(productId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다. ID: " + productId));
 
-         if (product.isDeleted()) {
-         throw new IllegalArgumentException("현재 판매 중지된 상품입니다.");
-         }
+        if (product.isDeleted()) {
+            throw new IllegalArgumentException("현재 판매 중지된 상품입니다.");
+        }
+
+        // 재고 차감
+        product.decreaseStock(requestDto.getQuantity());
 
         Order order = Order.builder()
                 .product(product)
+                .quantity(requestDto.getQuantity())
                 .build();
 
         Order saveOrder = orderRepository.save(order);

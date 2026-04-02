@@ -39,4 +39,11 @@ public class Product {
     public void softDelete() {
         this.isDeleted = true;
     }
+
+    public void decreaseStock(int quantity) {
+        if (this.stock < quantity) {
+            throw new IllegalArgumentException("재고가 부족합니다. 현재 재고: " + this.stock);
+        }
+        this.stock -= quantity;
+    }
 }

@@ -18,9 +18,11 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+    private int quantity; // 주문 수량 추가
 
     @Builder
-    public Order(Product product) {
+    public Order(Product product, int quantity) {
         this.product = product;
+        this.quantity = quantity;
     }
 }
