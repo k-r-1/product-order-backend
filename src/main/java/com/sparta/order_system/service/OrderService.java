@@ -7,6 +7,8 @@ import com.sparta.order_system.entity.Product;
 import com.sparta.order_system.repository.OrderRepository;
 import com.sparta.order_system.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,5 +47,11 @@ public class OrderService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다. ID: " + orderId));
 
         return new OrderResponseDto(order);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<OrderResponseDto> getOrderList(Pageable pageable) {
+        Page<Order> orderPage = orderRepository.findAllWithProduct(pageable);
+        return orderPage.map(OrderResponseDto::new);
     }
 }
