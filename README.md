@@ -62,6 +62,8 @@ erDiagram
    - 개발 편의를 위해 API 명세를 자동으로 만들어주는 Swagger를 적용해 보려 했습니다. 그러나 처음 설정 시 `NoSuchMethodError`와 `NoProviderFoundException` 등이 번갈아 뜨며 실행 단계에서 멈추는 에러를 겪었습니다.
    - 공식 문서 등을 확인해보니 현재 적용된 Spring Boot 4.x 버전과 스웨거(2.x 버전)의 호환성 문제임을 알게 되었습니다. 버전을 `3.0.2`로 직접 맞추고 누락된 `spring-boot-starter-validation` 라이브러리를 보강해 스프링 부트 런타임 호환성 문제를 해결했습니다.
 
+<img width="1225" height="584" alt="image" src="https://github.com/user-attachments/assets/2a8588b8-aad0-43bb-8ecc-6740d7947d93" />
+
 ## 6. DB 설정 및 실행 방법 (How to Run)
 
 본 프로젝트는 MySQL을 기본 데이터베이스로 사용합니다. 프로젝트를 처음 실행하기 전, PC 환경에 맞게 DB 연결 설정이 필요합니다.
