@@ -26,8 +26,8 @@ erDiagram
     }
     ORDER {
         Long id PK
-        Long productId FK
-        LocalDateTime orderDate "주문일시"
+        Long product_id FK "주문 상품"
+        int quantity "주문 수량"
     }
 ```
 
