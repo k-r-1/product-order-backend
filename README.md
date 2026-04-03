@@ -88,3 +88,15 @@ spring:
 ./gradlew bootRun
 ```
 - 서버 구동 후 브라우저에 접속하여 자동으로 생성된 API 명세서(Swagger UI)를 확인할 수 있습니다: `http://localhost:8080/swagger-ui/index.html`
+
+<br>
+
+## 7. 개발 과정 및 TIL (블로그)
+프로젝트를 진행하며 부딪힌 문제들, 개념 학습, 그리고 트러블슈팅 과정을 개인 블로그에 상세히 기록했습니다.
+
+- [🔗 Spring Boot 프로젝트 초기 설정 및 DB 연동](https://k-r-1.tistory.com/120)
+- [🔗 Spring Boot 상품 관리 CRUD API 구현 및 Soft Delete 리팩토링](https://k-r-1.tistory.com/121)
+- [🔗 Spring Boot 주문 시스템 API 구현](https://k-r-1.tistory.com/124)
+- [🔗 Spring Boot 주문 API - 상품 재고 차감과 동시성 문제(비관적 락) 해결](https://k-r-1.tistory.com/125)
+- [🔗 JPA N+1 문제 해결과 페이징 최적화 (Fetch Join & Lazy Loading)](https://k-r-1.tistory.com/126)
+- [🔗 Spring Boot 전역 예외 처리(Global Exception Handler)와 커스텀 예외 적용](https://k-r-1.tistory.com/127)
