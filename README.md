@@ -34,16 +34,22 @@ erDiagram
 ## 4. 핵심 요구사항 실행 증빙 (스크린샷)
 
 ### 📸 핵심 1: 주문 목록 조회 (N+1 방어 및 페이징)
-<!-- 여기에 [주문 목록 조회] 스크린샷 1장을 드래그 앤 드롭으로 넣어주세요! -->
-> **설명:** 여러 건의 주문을 조회할 때, N+1 쿼리 최적화(Fetch Join)를 통해 안정적으로 주문과 상품 정보를 함께 불러오는 결과입니다.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8eb3fa09-deb1-4478-b567-004df933a455" width="49%" alt="image 1" />
+  <img src="https://github.com/user-attachments/assets/a82f670b-06b4-4422-b160-dd7291f2629b" width="49%" alt="image 2" />
+</p>
+
+> **설명:** 여러 건의 주문을 조회할 때, N+1 쿼리 최적화(Fetch Join)를 통해 주문과 상품 정보를 함께 불러오는 결과입니다.
 
 <br>
 
 ### 📸 핵심 2: 상품 재고 차감 및 동시성 예외 방어
-<!-- 여기에 [재고 1인 상품 2번 주문 실패] 스크린샷 1장을 드래그 앤 드롭으로 넣어주세요! -->
+<img src="https://github.com/user-attachments/assets/9ae2a9d7-d76e-47c9-b92b-a374cc53e2c4" width="600" alt="동시성 제어 결과 이미지" />
+
 > **설명:** 재고가 1개인 상품을 2번 연속 주문했을 때, 수량이 0 미만으로 떨어지지 않고 방어되어 주문 생성이 거부되는 결과입니다.
 
----
+<br>
+
 
 ## 5. 과제 구현 내용
 
