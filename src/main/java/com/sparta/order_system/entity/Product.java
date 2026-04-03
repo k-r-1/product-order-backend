@@ -1,5 +1,7 @@
 package com.sparta.order_system.entity;
 
+import com.sparta.order_system.exception.NotEnoughStockException;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,7 +44,7 @@ public class Product {
 
     public void decreaseStock(int quantity) {
         if (this.stock < quantity) {
-            throw new IllegalArgumentException("재고가 부족합니다. 현재 재고: " + this.stock);
+            throw new NotEnoughStockException("재고가 부족합니다. 현재 재고: " + this.stock);
         }
         this.stock -= quantity;
     }

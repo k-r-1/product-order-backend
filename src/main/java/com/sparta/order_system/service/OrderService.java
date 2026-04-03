@@ -4,6 +4,9 @@ import com.sparta.order_system.dto.OrderRequestDto;
 import com.sparta.order_system.dto.OrderResponseDto;
 import com.sparta.order_system.entity.Order;
 import com.sparta.order_system.entity.Product;
+import com.sparta.order_system.exception.DeletedProductOrderException;
+import com.sparta.order_system.exception.OrderNotFoundException;
+import com.sparta.order_system.exception.ProductNotFoundException;
 import com.sparta.order_system.repository.OrderRepository;
 import com.sparta.order_system.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +25,10 @@ public class OrderService {
     public OrderResponseDto createOrder(OrderRequestDto requestDto) {
         Long productId = requestDto.getProductId();
         Product product = productRepository.findByIdWithPessimisticLock(productId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다. ID: " + productId));
+                .orElseThrow(() -> new ProductNotFoundException("해당 상품이 존재하지 않습니다. ID: " + productId));
 
         if (product.isDeleted()) {
-            throw new IllegalArgumentException("현재 판매 중지된 상품입니다.");
+            throw new DeletedProductOrderException("현재 판매 중지된 상품입니다.");
         }
 
         // 재고 차감
@@ -44,7 +47,7 @@ public class OrderService {
     @Transactional(readOnly = true)
     public OrderResponseDto getOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다. ID: " + orderId));
+                .orElseThrow(() -> new OrderNotFoundException("해당 주문이 존재하지 않습니다. ID: " + orderId));
 
         return new OrderResponseDto(order);
     }

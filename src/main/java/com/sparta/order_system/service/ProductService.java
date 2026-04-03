@@ -3,13 +3,13 @@ package com.sparta.order_system.service;
 import com.sparta.order_system.dto.ProductRequestDto;
 import com.sparta.order_system.dto.ProductResponseDto;
 import com.sparta.order_system.entity.Product;
+import com.sparta.order_system.exception.ProductNotFoundException;
 import com.sparta.order_system.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +38,7 @@ public class ProductService {
     // 특정 상품 조회
     public ProductResponseDto getProductById(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다. ID: " + id));
+                .orElseThrow(() -> new ProductNotFoundException("해당 상품이 존재하지 않습니다. ID: " + id));
 
         return new ProductResponseDto(product);
     }
@@ -47,7 +47,7 @@ public class ProductService {
     @Transactional
     public ProductResponseDto updateProduct(Long id, ProductRequestDto requestDto) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다. ID: " + id));
+                .orElseThrow(() -> new ProductNotFoundException("해당 상품이 존재하지 않습니다. ID: " + id));
         product.update(requestDto.getName(), requestDto.getPrice(), requestDto.getStock());
 
         return new ProductResponseDto(product);
@@ -57,9 +57,9 @@ public class ProductService {
     @Transactional
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다. ID: " + id));
+                .orElseThrow(() -> new ProductNotFoundException("해당 상품이 존재하지 않습니다. ID: " + id));
 
-//        productRepository.delete(product);
+        // productRepository.delete(product);
         product.softDelete();
     }
 }
