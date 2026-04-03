@@ -62,9 +62,29 @@ erDiagram
    - 개발 편의를 위해 API 명세를 자동으로 만들어주는 Swagger를 적용해 보려 했습니다. 그러나 처음 설정 시 `NoSuchMethodError`와 `NoProviderFoundException` 등이 번갈아 뜨며 실행 단계에서 멈추는 에러를 겪었습니다.
    - 공식 문서 등을 확인해보니 현재 적용된 Spring Boot 4.x 버전과 스웨거(2.x 버전)의 호환성 문제임을 알게 되었습니다. 버전을 `3.0.2`로 직접 맞추고 누락된 `spring-boot-starter-validation` 라이브러리를 보강해 스프링 부트 런타임 호환성 문제를 해결했습니다.
 
-## 6. 실행 방법
+## 6. DB 설정 및 실행 방법 (How to Run)
+
+본 프로젝트는 MySQL을 기본 데이터베이스로 사용합니다. 프로젝트를 처음 실행하기 전, PC 환경에 맞게 DB 연결 설정이 필요합니다.
+
+### 1단계: Database 생성
+MySQL 에 접속하여 전용 데이터베이스를 생성합니다.
+```sql
+CREATE DATABASE order_system;
+```
+
+### 2단계: application.yml 수정 (DB 계정 연동)
+`src/main/resources/application.yml` (또는 properties) 파일에서 본인의 MySQL 계정 정보에 맞게 아이디와 비밀번호를 수정해 주세요.
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/order_system
+    username: root        # 본인의 MySQL 아이디로 변경 (예: root)
+    password: password123 # 본인의 MySQL 비밀번호로 변경
+```
+
+### 3단계: 빌드 및 실행
 ```bash
-# 빌드 및 실행
+# 프로젝트 빌드 및 실행
 ./gradlew bootRun
 ```
-- 서버 구동 후 브라우저 접속을 통해 자동으로 생성된 API 문서(Swagger UI) 확인 및 테스트를 할 수 있습니다: `http://localhost:8080/swagger-ui/index.html`
+- 서버 구동 후 브라우저에 접속하여 자동으로 생성된 API 명세서(Swagger UI)를 확인할 수 있습니다: `http://localhost:8080/swagger-ui/index.html`
